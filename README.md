@@ -1,103 +1,93 @@
 # Credit Card Payment Behavior & Default Risk Analysis
 
-A beginner-friendly data analytics project that uses **Excel, MySQL and Power BI** to understand customer credit exposure, payment behavior and observed credit-card default risk.
+I built this project to understand how credit exposure and payment behavior look across customers who default and customers who don't. The analysis starts in Excel, moves to MySQL for verification, and ends in a two-page Power BI dashboard.
 
-![Power BI Page 1](assets/PB1.png)
+![Power BI Dashboard - Page 1](assets/PowerBI_Page1.png)
+
+---
 
 ## 1. Introduction
 
-This project looks at customer credit, billing, payment and late-payment data to understand **default patterns and payment behavior**.
+This is a credit risk analysis on 4,220 credit card customers. Each row is one customer, and the data shows their credit limit, monthly bills and payments, late-payment history, repayment status codes and whether they defaulted the next month.
 
-I took the project from raw data to **data cleaning, analysis, SQL validation, business insights and an interactive Power BI dashboard**.
-
-The analysis focuses on understanding where default rates are higher across different customer and payment-behavior groups.
+I wanted to see which customer groups show higher observed default rates. I also wanted to practise a full Excel → SQL → Power BI workflow where the same numbers match at every stage.
 
 ---
 
 ## 2. Business Problem
 
-A credit business needs a simple way to answer questions like:
+A bank or card issuer wants to know where default risk shows up in its customer base. Some questions it might ask:
 
 - How many customers are defaulting?
-- How does default vary across credit-limit groups?
-- How does default vary with late-payment behavior?
-- How does default vary across credit-utilization groups?
-- How does payment status relate to default?
-- How do average bills and payments differ between default and non-default customers?
+- Do customers with higher credit utilization default more often?
+- Do customers with more late payments default more often?
+- Do defaulting customers bill and pay differently from the rest?
 
-The goal is to create **one clear view of customer credit exposure, payment behavior and observed default risk**, so higher-risk patterns can be identified for further review.
+This project answers these questions using only the patterns visible in this dataset.
 
 ---
 
 ## 3. Dataset
 
-Source: **Final project dataset used for the analysis**.
-
-The project uses a customer-level dataset containing credit, billing and payment information.
-
-The currency or monetary unit is **not specified in the source dataset**, so no currency is assumed in the analysis.
-
-| Item | Detail |
+| Detail | Information |
 |---|---|
-| Customers | 4,220 |
-| Default Customers | 935 |
-| Non-Default Customers | 3,285 |
-| Default Rate | 22.16% |
-| Analysis Table | Clean_Data |
-| Customer Key | CustomerID |
-| Payment Status | Coded values 0–3; business meaning is not defined in the source |
+| Project domain | Finance / Credit Risk |
+| Customers | 4,220 (one row per customer, all CustomerIDs unique) |
+| Default customers | 935 |
+| Non-default customers | 3,285 |
+| Overall default rate | 22.16% |
+| Target field | `DefaultNextMonth` (0 = Non-Default, 1 = Default) |
+| Raw columns | 21 |
+| Source of the dataset | Not specified in the source dataset. |
+| Currency / monetary unit | Not specified in the source dataset. |
 
-The final analysis uses **4,220 unique customer records**.
+**Fields I used from the raw data:** Age, Gender, Education, MaritalStatus, EmploymentType, MonthlyIncome, CreditLimit, MonthsWithBank, PaymentStatus_M1 / M2 / M3, BillAmount_M1 / M2 / M3, PaymentAmount_M1 / M2 / M3, CashAdvance_M1, LatePayments_6M and DefaultNextMonth.
 
-> **Note:** `CardsHeld` was removed from the project and is not used anywhere in the analysis.
+**Fields I created:**
+
+| Field | Rule |
+|---|---|
+| Age_Group | 21–29, 30–39, 40–49, 50–59, 60+ |
+| Credit_Limit_Group | Low < 40M, Medium 40M to < 60M, High 60M to < 100M, Very High ≥ 100M |
+| Average_Bill | Average of BillAmount_M1, M2, M3 |
+| Average_Payment | Average of PaymentAmount_M1, M2, M3 |
+| Credit_Utilization | Average_Bill / CreditLimit |
+| Credit_Utilization_Group | Low ≤ 25%, Moderate > 25% to 50%, High > 50% to 75%, Very High > 75% to 100%, Over Limit > 100% |
+| Late_Payment_Category | 0 = No Late Payments, 1–2 = Low, 3–4 = Moderate, 5+ = High |
+| Credit_Utilization_Sort | Helper column used only in Excel to keep the utilization groups in order |
+
+CardsHeld was removed from the project and is not used anywhere in the analysis.
 
 ---
 
 ## 4. Tools Used
 
-| Tool | What I used it for |
+| Tool | How I used it |
 |---|---|
-| Excel | Data cleaning, derived fields, business questions and PivotTable analysis |
-| MySQL | Data validation, KPI calculations and business-question analysis |
-| Power BI | Interactive dashboard, slicers, charts and visual analysis |
-| DAX | KPI and analysis measures in Power BI |
+| Excel | Data cleaning, derived fields, Data Dictionary and PivotTables (PT01–PT06) |
+| MySQL | Data validation checks and SQL queries for the six business questions |
+| Power BI | Two-page interactive dashboard |
+| DAX | Measures for KPIs and default rates |
 
 ---
 
 ## 5. What I Did
 
-`Raw Data → Excel → MySQL → Power BI`
+**Excel → SQL → Power BI**
 
-- **Excel:** cleaned and organized the data, created analysis fields such as age groups, credit-limit groups, average bill, average payment, credit utilization and late-payment categories, and built PivotTables for validation.
-- **SQL:** loaded the cleaned data into MySQL, validated the dataset and answered the six business questions using simple SQL.
-- **Power BI:** connected the validated data, created DAX measures, added slicers and built a two-page interactive dashboard.
-- **Validation:** reconciled the important results across Excel, SQL and Power BI.
+**Excel**
+- Kept the raw data in `RAW_Data` and built a `Clean_Data` sheet from it.
+- Created the derived fields with formulas (age group, credit limit group, average bill, average payment, credit utilization, utilization group and late-payment category).
+- Wrote a `Data_Dictionary` and a `Business_Questions` sheet.
+- Built six PivotTables (PT01–PT06) in `Pivot_Analysis` to answer the business questions.
 
----
+**SQL (MySQL)**
+- Created a `credit_card_clean` table from the Clean_Data sheet. The Credit_Utilization_Sort helper column is left out on purpose because it is only needed for sorting in Excel.
+- Ran validation checks first: row count, duplicate CustomerIDs, NULLs, and only 0/1 in DefaultNextMonth.
+- Wrote one query for each business question (Q1–Q6) so the results could be matched against the Excel pivots.
+- Added a small extra query for default rate by age group.
 
-## 6. Metrics I Created
-
-```text
-Default Rate
-= Default Customers ÷ Total Customers
-
-Average Bill
-= AVERAGE(BillAmount_M1, BillAmount_M2, BillAmount_M3)
-
-Average Payment
-= AVERAGE(PaymentAmount_M1, PaymentAmount_M2, PaymentAmount_M3)
-
-Credit Utilization
-= Average_Bill ÷ CreditLimit
-
-Age Group
-= 21–29, 30–39, 40–49, 50–59, 60+
-
-Credit Limit Group
-= Low, Medium, High, Very High
-
-Late Payment Category
-= No Late Payments, Low, Moderate, High
-
-Credit Utilization Group
-= Low, Moderate, High, Very High, Over Limit
+**Power BI**
+- Loaded Clean_Data as a single table. There are no relationships because only one table is needed.
+- Added a `Default Status` column (1 = Default, 0 = Non-Default) for the donut chart and the bill vs payment chart.
+- Wrote 11 DAX measures and built
