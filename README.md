@@ -3,6 +3,7 @@
 I built this project to understand how credit exposure and payment behavior look across customers who default and customers who don't. The analysis starts in Excel, moves to MySQL for verification, and ends in a two-page Power BI dashboard.
 
 ![Power BI Dashboard - Page 1](assets/PowerBI_Page1.png)
+
 ![Power BI Dashboard - Page 2](assets/PowerBI_Page2.png)
 
 ---
