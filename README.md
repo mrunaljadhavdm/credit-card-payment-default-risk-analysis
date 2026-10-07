@@ -2,7 +2,7 @@
 
 A beginner-friendly data analytics project that uses **Excel, MySQL and Power BI** to understand customer credit exposure, payment behavior and observed credit-card default risk.
 
-![Power BI Page 1](assets/PowerBI_Page1.png)
+![Power BI Page 1](assets/PB1.png)
 
 ## 1. Introduction
 
