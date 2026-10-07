@@ -48,7 +48,7 @@ The project is based on the public **Default of Credit Card Clients** dataset fr
 **Original Dataset Source:**  
 [UCI Machine Learning Repository — Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350/defaultofcreditcardclients)
 
-The original UCI dataset contains 30,000 records. This project uses a prepared **4,220-customer dataset** for the final Excel, SQL and Power BI analysis. :chatgpt-content-reference{index="1"}
+The original UCI dataset contains 30,000 records. This project uses a prepared **4,220-customer dataset** for the final Excel, SQL and Power BI analysis. 
 
 | Detail | Information |
 |---|---|
