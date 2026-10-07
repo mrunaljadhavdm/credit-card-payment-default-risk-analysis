@@ -43,18 +43,22 @@ The goal is to create a clear view of **customer credit exposure and payment beh
 
 ## 3. Dataset
 
-The final project uses a **4,220-customer prepared dataset**, with one row per customer and unique `CustomerID` values.
+The project is based on the public **Default of Credit Card Clients** dataset from the UCI Machine Learning Repository.
+
+**Original Dataset Source:**  
+[UCI Machine Learning Repository — Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350/defaultofcreditcardclients)
+
+The original UCI dataset contains 30,000 records. This project uses a prepared **4,220-customer dataset** for the final Excel, SQL and Power BI analysis. :chatgpt-content-reference{index="1"}
 
 | Detail | Information |
 |---|---|
 | Project Domain | Finance / Credit Risk |
-| Customers | 4,220 |
+| Customers in Final Analysis | 4,220 |
 | Default Customers | 935 |
 | Non-Default Customers | 3,285 |
 | Overall Default Rate | 22.16% |
 | Target Field | `DefaultNextMonth` (0 = Non-Default, 1 = Default) |
-| Raw Columns | 21 |
-| Currency / Monetary Unit | Not specified in the source dataset |
+| Currency / Monetary Unit | Not specified in the project dataset |
 
 ### Fields used from the raw data
 
