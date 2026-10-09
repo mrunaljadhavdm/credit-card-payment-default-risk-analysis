@@ -7,6 +7,7 @@
 This project compares observed credit-card default patterns across credit-utilization groups, credit-limit groups, late-payment categories, coded payment-status values, and customer bill/payment behavior. It uses Excel for preparation and PivotTable analysis, MySQL for data validation and querying, and Power BI for reporting.
 
 ![Power BI Dashboard — Overview](assets/PowerBI_Page1.png)
+![Power BI Dashboard — Overview](assets/PowerBI_Page2.png)
 
 ## 1. Business Problem
 
